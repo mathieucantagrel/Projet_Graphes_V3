@@ -29,6 +29,7 @@ public class Main {
             e.printStackTrace();
         }
 
+        System.out.println("Projet V1");
         Lecture(allSommet);
         MatriceAdjacence(nbArc, nbSommet, allSommet);
         MatriceValeurs(nbArc, nbSommet, allSommet);
@@ -46,7 +47,7 @@ public class Main {
     public static void MatriceAdjacence(int nbArc, int nbSommet, ArrayList<Sommet> sommet){
         System.out.println("\n\nMatrice d'adjacence:\n");
         //initialisation de la matrice
-        String Matrix[][] = CreationMatrice(nbSommet);
+        String[][] Matrix = CreationMatrice(nbSommet);
 
         for (int i=0; i<nbArc; i++){
             for (int j=0; j<nbArc; j++){
