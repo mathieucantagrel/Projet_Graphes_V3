@@ -14,7 +14,7 @@ public class Main {
         ArrayList<Sommet> allSommet = new ArrayList<Sommet>();
 
         try {
-            Scanner scanner = new Scanner(new File("graph2.txt")); //declaration de lecture sur fichier .txt
+            Scanner scanner = new Scanner(new File("graph1.txt")); //declaration de lecture sur fichier .txt
             //on commence par recuperer le nombre de sommets et d'arcs
             nbSommet = Integer.parseInt(scanner.nextLine());
             nbArc = Integer.parseInt(scanner.nextLine());
@@ -31,8 +31,16 @@ public class Main {
 
         System.out.println("Projet V1");
         Lecture(allSommet);
-        MatriceAdjacence(nbArc, nbSommet, allSommet);
-        MatriceValeurs(nbArc, nbSommet, allSommet);
+
+        //matrice d'adjacence
+        String[][] MatriceAdjacence = MatriceAdjacence(nbArc, nbSommet, allSommet);
+        System.out.println("\n\nMatrice d'adjacence:\n");
+        AffichageMatrice(nbArc, nbSommet, MatriceAdjacence);
+
+        //matrice des valeurs
+        String[][] MatriceValeurs = MatriceValeurs(nbArc, nbSommet, allSommet);
+        System.out.println("\n\nMatrice des valeurs:\n");
+        AffichageMatrice(nbArc, nbSommet, MatriceValeurs);
     }
 
 
@@ -44,8 +52,7 @@ public class Main {
     }
 
 
-    public static void MatriceAdjacence(int nbArc, int nbSommet, ArrayList<Sommet> sommet){
-        System.out.println("\n\nMatrice d'adjacence:\n");
+    public static String[][] MatriceAdjacence(int nbArc, int nbSommet, ArrayList<Sommet> sommet){
         //initialisation de la matrice
         String[][] Matrix = CreationMatrice(nbSommet);
 
@@ -57,12 +64,12 @@ public class Main {
             }
         }
 
-        AffichageMatrice(nbArc, nbSommet, Matrix);
+        return Matrix;
     }
 
 
-    public static void MatriceValeurs(int nbArc, int nbSommet, ArrayList<Sommet> sommet){
-        System.out.println("\n\nMatrice des valeurs:\n");
+    public static String[][] MatriceValeurs(int nbArc, int nbSommet, ArrayList<Sommet> sommet){
+
         String[][] Matrix = CreationMatrice(nbSommet);
 
         for (int i=0; i<nbArc; i++){
@@ -73,7 +80,7 @@ public class Main {
             }
         }
 
-        AffichageMatrice(nbArc, nbSommet, Matrix);
+        return Matrix;
     }
 
 
@@ -101,6 +108,6 @@ public class Main {
             }
             System.out.println("  ");
         }
-
     }
+
 }
