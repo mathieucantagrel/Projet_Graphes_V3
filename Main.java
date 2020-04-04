@@ -14,7 +14,7 @@ public class Main {
         ArrayList<Sommet> allSommet = new ArrayList<Sommet>();
 
         try {
-            Scanner scanner = new Scanner(new File("graph1.txt")); //declaration de lecture sur fichier .txt
+            Scanner scanner = new Scanner(new File("graph2.txt")); //declaration de lecture sur fichier .txt
             //on commence par recuperer le nombre de sommets et d'arcs
             nbSommet = Integer.parseInt(scanner.nextLine());
             nbArc = Integer.parseInt(scanner.nextLine());
