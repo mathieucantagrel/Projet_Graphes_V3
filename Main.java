@@ -45,12 +45,7 @@ public class Main {
         System.out.println("\n\nMatrice des valeurs:\n");
         AffichageMatrice(nbArc, nbSommet, MatriceValeurs);
 
-        boolean circuit = DetectionCircuit(MatriceAdjacence);
-        if (circuit){
-            System.out.print("\n\nce graphe contient un circuit\n");
-        }else {
-            System.out.print("\n\nce graphe ne contient pas de circuit\n");
-        }
+        DetectionCircuit(MatriceAdjacence);
     }
 
 
@@ -107,7 +102,7 @@ public class Main {
 
 
     public static void AffichageMatrice(int nbArc, int nbSommet, String[][] Matrix){
-        for (int i=-1; i<nbArc-1; i++){
+        for (int i=-1; i<nbSommet; i++){
             if (i==-1){
                 System.out.print("\t");
             }else{
@@ -129,7 +124,7 @@ public class Main {
     //qui n'ont rien dans leur colonne. Enlever un point siginifie mettre a zero (ou *) la ligne qui lui correspond
     //lorsqu'on a fini de retirer tous les points qui n'ont pas de predecesseur, on regarde la matrice d'adjacence : s'il reste
     //des points alors il y a un circuit, sinon il n'y a pas de circuit.
-    public static boolean DetectionCircuit(String[][] Matrix) {
+    public static void DetectionCircuit(String[][] Matrix) {
         boolean hasNoPrec;
         ArrayList<Integer> noPrecList = new ArrayList<Integer>();
         ArrayList<Integer> sommet = new ArrayList<Integer>();
@@ -161,18 +156,25 @@ public class Main {
             }
         }
 
-        for (int i=0; i<sommet.size(); i++){
-            System.out.printf("%s -> %s\n", sommet.get(i), rank.get(i));
-        }
-
+        Boolean isCircuit = false;
         //on regarde la matrice, si elle a un point different de zero, alors il y a un circuit
         for (int i=0; i<nbSommet; i++){
             for (int j=0; j<nbSommet; j++){
                 if (!Matrix[i][j].equals("*")){
-                    return true;
+                    isCircuit = true;
+                    break;
                 }
             }
         }
-        return false;
+
+        if (!isCircuit){
+            System.out.print("\n\nLe graph ne contient pas de circuit\n");
+            System.out.println("sommet \t rang");
+            for (int i=0; i<sommet.size(); i++){
+                System.out.printf("%s \t\t %s\n", sommet.get(i), rank.get(i));
+            }
+        }else {
+            System.out.print("\n\nle graphe contient un circuit\n");
+        }
     }
 }
