@@ -130,10 +130,15 @@ public class Main {
     //lorsqu'on a fini de retirer tous les points qui n'ont pas de predecesseur, on regarde la matrice d'adjacence : s'il reste
     //des points alors il y a un circuit, sinon il n'y a pas de circuit.
     public static boolean DetectionCircuit(String[][] Matrix) {
-        boolean hasNoPrec = true;
+        boolean hasNoPrec;
+        ArrayList<Integer> noPrecList = new ArrayList<Integer>();
+        ArrayList<Integer> sommet = new ArrayList<Integer>();
+        ArrayList<Integer> rank = new ArrayList<Integer>();
 
         for (int k=0; k<nbSommet+1; k++) { //au maximum on effectuera autant d'iteration qu'il y a de points +1
+            noPrecList.clear();
             for (int i = 0; i < nbSommet; i++) { //on regarde chaque point du graphe
+
                 hasNoPrec = true;
                 for (int j = 0; j < nbSommet; j++) {
                     if (!Matrix[j][i].equals("*")) { //on regarde si un point dans la matrice a au moins un predesseur
@@ -141,11 +146,23 @@ public class Main {
                     }
                 }
                 if (hasNoPrec) { //si le point n'a pas de predecesseur alors on supprime point, on met la ligne qui lui correspond a zero
-                    for (int j = 0; j < nbSommet; j++) {
-                        Matrix[i][j] = "*";
+                    if (!sommet.contains(i)){
+                        sommet.add(i);
+                        rank.add(k);
                     }
+                    noPrecList.add(i);
                 }
             }
+            for (Integer i : noPrecList){
+                for (int j=0; j<nbSommet; j++){
+                    Matrix[i][j]="*";
+                }
+
+            }
+        }
+
+        for (int i=0; i<sommet.size(); i++){
+            System.out.printf("%s -> %s\n", sommet.get(i), rank.get(i));
         }
 
         //on regarde la matrice, si elle a un point different de zero, alors il y a un circuit
