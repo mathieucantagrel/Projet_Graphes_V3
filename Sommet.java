@@ -1,11 +1,11 @@
 public class Sommet {
     private int nom;
-    private int arc;
+    private int suivant;
     private int valeur;
 
-    public Sommet(int nom, int arc, int valeur) {
+    public Sommet(int nom, int suivant, int valeur) {
         this.nom = nom;
-        this.arc = arc;
+        this.suivant = suivant;
         this.valeur = valeur;
     }
 //
@@ -17,12 +17,12 @@ public class Sommet {
         this.nom = nom;
     }
 
-    public int getArc() {
-        return arc;
+    public int getSuivant() {
+        return suivant;
     }
 
-    public void setArc(int arc) {
-        this.arc = arc;
+    public void setArc(int suivant) {
+        this.suivant = suivant;
     }
 
     public int getValeur() {
