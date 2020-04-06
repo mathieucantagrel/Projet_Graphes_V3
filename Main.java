@@ -230,9 +230,9 @@ public class Main {
             if (i==0){
                 nbEntree++;
                 if (nbEntree>1){
-
-                    System.out.println("\n\nle graph n'est pas un graphe d'ordonancement 1");
-//                    return;
+                    System.out.println("\n\nle graph n'est pas un graphe d'ordonancement");
+                    System.out.println("Le graphe contient plusieurs entrees");
+                    return;
                 }
                 entree = i;
             }
@@ -250,8 +250,9 @@ public class Main {
             if (isSortie) {
                 nbSortie++;
                 if (nbSortie>1){
-                    System.out.println("\n\nle graph n'est pas un graphe d'ordonancement 2");
-//                    return;
+                    System.out.println("\n\nle graph n'est pas un graphe d'ordonancement");
+                    System.out.println("le graphe contient plusieurs sorties");
+                    return;
                 }
             }
         }
@@ -264,8 +265,9 @@ public class Main {
                     if (arcValue==0){
                         arcValue = s.getValeur();
                     }else if (s.getValeur()!=arcValue){
-                        System.out.println("\n\nle graph n'est pas un graphe d'ordonancement 3");
-//                        return;
+                        System.out.println("\n\nle graph n'est pas un graphe d'ordonancement");
+                        System.out.println("tous les arcs sortants d'un meme sommet n'ont pas la meme valeur");
+                        return;
                     }
                 }
             }
@@ -274,18 +276,22 @@ public class Main {
         for (Sommet s : allsommet){
             if (s.getNom()==entree){
                 if (s.getValeur()!=0){
-                    System.out.println("\n\nle graph n'est pas un graphe d'ordonancement 4");
-//                        return;
+                    System.out.println("\n\nle graph n'est pas un graphe d'ordonancement");
+                    System.out.println("les arcs sortants du point d'entree n'ont pas tous une valeure nulle");
+                        return;
                 }
             }
         }
 
         for (Sommet s : allsommet){
             if (s.getValeur()<0){
-                System.out.println("\n\nle graph n'est pas un graphe d'ordonancement 5");
-//                        return;
+                System.out.println("\n\nle graph n'est pas un graphe d'ordonancement");
+                System.out.println("Tous les arcs n'ont pas une valeure positive");
+                        return;
             }
         }
+
+        System.out.println("le graphe est un graphe d'ordonancement");
 
     }
 }
