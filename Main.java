@@ -17,7 +17,7 @@ public class Main {
         ArrayList<Sommet> allSommet = new ArrayList<Sommet>();
 
         try {
-            Scanner scanner = new Scanner(new File("graph1.txt")); //declaration de lecture sur fichier .txt
+            Scanner scanner = new Scanner(new File("graph_ordo.txt")); //declaration de lecture sur fichier .txt
             //on commence par recuperer le nombre de sommets et d'arcs
             nbSommet = Integer.parseInt(scanner.nextLine());
             nbArc = Integer.parseInt(scanner.nextLine());
@@ -45,7 +45,7 @@ public class Main {
         System.out.println("\n\nMatrice des valeurs:\n");
         AffichageMatrice(nbArc, nbSommet, MatriceValeurs);
 
-        DetectionCircuit(MatriceAdjacence);
+        DetectionCircuit(MatriceAdjacence, allSommet);
     }
 
 
@@ -124,14 +124,25 @@ public class Main {
     //qui n'ont rien dans leur colonne. Enlever un point siginifie mettre a zero (ou *) la ligne qui lui correspond
     //lorsqu'on a fini de retirer tous les points qui n'ont pas de predecesseur, on regarde la matrice d'adjacence : s'il reste
     //des points alors il y a un circuit, sinon il n'y a pas de circuit.
-    public static void DetectionCircuit(String[][] Matrix) {
+    public static void DetectionCircuit(String[][] Matrix, ArrayList<Sommet> allSommet) {
         boolean hasNoPrec;
         ArrayList<Integer> noPrecList = new ArrayList<Integer>();
         ArrayList<Integer> sommet = new ArrayList<Integer>();
         ArrayList<Integer> rank = new ArrayList<Integer>();
+        ArrayList<Integer> affichage = new ArrayList<Integer>();
+
+        String[][] newMatrix = new String[nbSommet][nbSommet];
+        for (int i=0; i<nbSommet; i++){
+            for (int j=0; j<nbSommet; j++){
+                newMatrix[i][j] = Matrix[i][j];
+            }
+        }
+
+        System.out.println("\n\nDetection de circuit\nmethode de suppression des points d'entres");
 
         for (int k=0; k<nbSommet+1; k++) { //au maximum on effectuera autant d'iteration qu'il y a de points +1
             noPrecList.clear();
+            affichage.clear();
             for (int i = 0; i < nbSommet; i++) { //on regarde chaque point du graphe
 
                 hasNoPrec = true;
@@ -140,10 +151,11 @@ public class Main {
                         hasNoPrec = false;
                     }
                 }
-                if (hasNoPrec) { //si le point n'a pas de predecesseur alors on supprime point, on met la ligne qui lui correspond a zero
+                if (hasNoPrec) { //si le point n'a pas de predecesseur alors on supprime le point, on met la ligne qui lui correspond a zero
                     if (!sommet.contains(i)){
                         sommet.add(i);
                         rank.add(k);
+                        affichage.add(i);
                     }
                     noPrecList.add(i);
                 }
@@ -154,9 +166,18 @@ public class Main {
                 }
 
             }
+
+            if (affichage.size()!=0) {
+                System.out.println("Point(s) d'entree :");
+                for (Integer i : affichage) {
+                    System.out.printf("%s \t", i);
+                }
+                System.out.println("\nSuppression des points d'entree ");
+            }
+
         }
 
-        Boolean isCircuit = false;
+        boolean isCircuit = false;
         //on regarde la matrice, si elle a un point different de zero, alors il y a un circuit
         for (int i=0; i<nbSommet; i++){
             for (int j=0; j<nbSommet; j++){
@@ -168,13 +189,103 @@ public class Main {
         }
 
         if (!isCircuit){
-            System.out.print("\n\nLe graph ne contient pas de circuit\n");
-            System.out.println("sommet \t rang");
-            for (int i=0; i<sommet.size(); i++){
-                System.out.printf("%s \t\t %s\n", sommet.get(i), rank.get(i));
-            }
+            CalculRang(rank, sommet);
+            Ordonancement(rank, sommet, allSommet, newMatrix);
         }else {
             System.out.print("\n\nle graphe contient un circuit\n");
         }
+    }
+
+    public static void CalculRang(ArrayList<Integer> rank, ArrayList<Integer> sommet){
+        System.out.print("\nLe graph ne contient pas de circuit\n\n");
+        System.out.println("Calcul des rangs:");
+        System.out.println("Methode de suppression des points d'entree");
+
+        for (int i=0; i<rank.size()-1; i++){
+            System.out.printf("\nrang courant: %s", i);
+            System.out.println("\nPoints d'entree: ");
+
+            for (int j=0; j<rank.size(); j++){
+                if (rank.get(j)==i){
+                    System.out.printf("%s\t", sommet.get(j));
+                }
+            }
+        }
+
+        System.out.print("\n\nrangs calculees:\nsommet : ");
+        for (Integer integer : sommet) {
+            System.out.printf("\t%s", integer);
+        }
+
+        System.out.print("\nrang : \t");
+        for (Integer integer : rank) {
+            System.out.printf("\t%s", integer);
+        }
+    }
+
+    public static void Ordonancement(ArrayList<Integer> rank, ArrayList<Integer> sommet, ArrayList<Sommet> allsommet, String[][] Matrix){
+        int nbEntree=0;
+        int entree = 0;
+        for (Integer i : rank){
+            if (i==0){
+                nbEntree++;
+                if (nbEntree>1){
+
+                    System.out.println("\n\nle graph n'est pas un graphe d'ordonancement 1");
+//                    return;
+                }
+                entree = i;
+            }
+        }
+
+        boolean isSortie;
+        int nbSortie = 0;
+        for (int i=0; i<nbSommet; i++){
+            isSortie = true;
+            for (int j=0; j<nbSommet; j++){
+                if (!Matrix[i][j].equals("*")){
+                    isSortie = false;
+                }
+            }
+            if (isSortie) {
+                nbSortie++;
+                if (nbSortie>1){
+                    System.out.println("\n\nle graph n'est pas un graphe d'ordonancement 2");
+//                    return;
+                }
+            }
+        }
+
+        int arcValue = 0;
+        for (int i=0; i<allsommet.size(); i++){
+            arcValue = 0;
+            for (Sommet s : allsommet){
+                if (s.getNom()==i){
+                    if (arcValue==0){
+                        arcValue = s.getValeur();
+                    }else if (s.getValeur()!=arcValue){
+                        System.out.println("\n\nle graph n'est pas un graphe d'ordonancement 3");
+//                        return;
+                    }
+                }
+            }
+        }
+
+        for (Sommet s : allsommet){
+            if (s.getNom()==entree){
+                if (s.getValeur()!=0){
+                    System.out.println("\n\nle graph n'est pas un graphe d'ordonancement 4");
+//                        return;
+                }
+            }
+        }
+
+        for (Sommet s : allsommet){
+            if (s.getValeur()<0){
+                System.out.println("\n\nle graph n'est pas un graphe d'ordonancement 5");
+//                        return;
+            }
+        }
+
     }
 }
