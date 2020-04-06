@@ -291,7 +291,7 @@ public class Main {
             }
         }
 
-        System.out.println("le graphe est un graphe d'ordonancement");
+        System.out.println("\n\nle graphe est un graphe d'ordonancement");
 
     }
 }
