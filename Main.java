@@ -227,15 +227,15 @@ public class Main {
     public static void Ordonancement(ArrayList<Integer> rank, ArrayList<Integer> sommet, ArrayList<Sommet> allsommet, String[][] Matrix){
         int nbEntree=0;
         int entree = 0;
-        for (Integer i : rank){
-            if (i==0){
+        for (int i=0; i<rank.size(); i++){
+            if (rank.get(i)==0){
                 nbEntree++;
                 if (nbEntree>1){
                     System.out.println("\n\nle graph n'est pas un graphe d'ordonancement");
                     System.out.println("Le graphe contient plusieurs entrees");
                     return;
                 }
-                entree = i;
+                entree = sommet.get(i);
             }
         }
 
@@ -244,8 +244,9 @@ public class Main {
         for (int i=0; i<nbSommet; i++){
             isSortie = true;
             for (int j=0; j<nbSommet; j++){
-                if (!Matrix[i][j].equals("*")){
+                if (!Matrix[i][j].equals("*")) {
                     isSortie = false;
+                    break;
                 }
             }
             if (isSortie) {
