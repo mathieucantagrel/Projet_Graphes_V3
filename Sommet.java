@@ -2,6 +2,7 @@ public class Sommet {
     private int nom;
     private int suivant;
     private int valeur;
+    
 
     public Sommet(int nom, int suivant, int valeur) {
         this.nom = nom;
@@ -32,4 +33,5 @@ public class Sommet {
     public void setValeur(int valeur) {
         this.valeur = valeur;
     }
+
 }

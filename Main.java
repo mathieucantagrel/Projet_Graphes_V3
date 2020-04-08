@@ -46,6 +46,7 @@ public class Main {
         AffichageMatrice(nbArc, nbSommet, MatriceValeurs);
 
         DetectionCircuit(MatriceAdjacence, allSommet);
+        Calendrier(MatriceValeurs,allSommet);
     }
 
 
@@ -294,4 +295,130 @@ public class Main {
         System.out.println("\n\nle graphe est un graphe d'ordonancement");
 
     }
+    public static void Calendrier(String[][] Matrix, ArrayList<Sommet> allsommet) {
+    	
+    	ArrayList<Integer> Calendar_nom = new ArrayList<Integer>();
+    	ArrayList<Integer> Calendar_date_tot = new ArrayList<Integer>();
+    	ArrayList<Integer> Sommet_autorise = new ArrayList<Integer>();
+    	ArrayList<Integer> val_temp = new ArrayList<Integer>();
+    	ArrayList<Integer> Sommet_temp = new ArrayList<Integer>();
+    	ArrayList<Dijkstra> point_entree = new ArrayList<Dijkstra>();
+    	ArrayList<Dijkstra> determine_sommet = new ArrayList<Dijkstra>();
+    	ArrayList<Integer> doublon_temp = new ArrayList<Integer>();
+    	
+    	int suivant_temp = 0;
+    	int val = 0;
+    	int Sommetdi = 0;
+    	
+    	int cc[][] = new int[nbSommet][nbSommet];
+    	int temp = 0;
+    	 
+		for (Sommet s : allsommet){
+			if(s.getValeur()==0) {
+				temp  = s.getNom();
+		    }
+		}
+		Calendar_nom.add(temp);
+		Calendar_date_tot.add(0);
+		
+		 
+		while(nbSommet != Calendar_nom.size()) {
+			
+			Sommet_autorise.clear();
+			val_temp.clear();
+			
+			for (Integer nom : Calendar_nom){
+				for (Sommet s : allsommet){//on détermine les successeur que l'on peut atteindre
+					if(s.getNom() == nom) {
+						Sommet_autorise.add(s.getSuivant());
+					}
+				}
+			}
+				
+			for (Integer nom_fait : Calendar_nom){//on enleve les successeur avec deja des dates au plus tot
+				for(int i=0;i<Sommet_autorise.size();i++) {
+					if(nom_fait == Sommet_autorise.get(i)) {
+						doublon_temp.add(i);
+					}
+				}
+			}
+			
+			for(int i=0;i<doublon_temp.size();i++) {
+				Sommet_autorise.remove(doublon_temp.get(i));
+			}
+			
+			for(Integer auto : Sommet_autorise ) {//on determine les predecesseur du sommet pour calculer le plus cour chemin
+				for (Sommet s : allsommet){
+					point_entree.clear();//on clear la liste avant chaque calcul de predecesseur sur le sommet concerne
+					if(auto == s.getSuivant() ) {
+						Dijkstra S = new Dijkstra(s.getNom(),s.getSuivant(),s.getValeur(),1);
+						point_entree.add(S);
+					}
+				}
+					
+				for(Dijkstra date_temp : point_entree) {
+					while(date_temp.getNom()!= temp) {
+						int predecesseur = 0;
+						for (Sommet s : allsommet){
+							if(s.getSuivant()==date_temp.getNom()) {
+								if(predecesseur>0) {
+									val = date_temp.getDate()+ s.getValeur();
+									Dijkstra S = new Dijkstra(s.getNom(),s.getSuivant(),s.getValeur(),val);
+									point_entree.add(S);
+									predecesseur = predecesseur+1;
+								}
+								else {
+									val = date_temp.getDate() + s.getValeur();
+									date_temp.setDate(val);
+									date_temp.setNom(s.getNom());
+									date_temp.setValeur(s.getValeur());
+									date_temp.setSuivant(s.getSuivant());
+								}
+							}
+						}
+					}	
+				}
+				
+//				val = point_entree.get(0).getDate();
+
+				for(Dijkstra date_temp : point_entree) {
+					if(date_temp.getDate()<val) {
+						val = date_temp.getDate();
+					}				
+				}
+
+				Dijkstra D = new Dijkstra(auto,val);
+				determine_sommet.add(D);
+			}
+			
+			if (determine_sommet.size()!=0) {
+				val =  determine_sommet.get(0).getDate();
+				Sommetdi = determine_sommet.get(0).getNom();
+			}
+			
+			for(Dijkstra di : determine_sommet) {
+				if(val>di.getDate()) {
+					val = di.getDate();
+					Sommetdi = di.getNom();
+				}
+			}
+			Calendar_nom.add(Sommetdi);
+			Calendar_date_tot.add(val);
+			
+		}
+		
+		for(Integer testnom : Calendar_nom ) {
+			System.out.println(testnom);
+		}
+		
+		
+	}
+    
+			
+	  			
+    			
+    	
+    	
+    	
+    
 }
