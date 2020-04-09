@@ -1,10 +1,8 @@
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -17,7 +15,7 @@ public class Main {
         ArrayList<Sommet> allSommet = new ArrayList<Sommet>();
 
         try {
-            Scanner scanner = new Scanner(new File("graph_ordo.txt")); //declaration de lecture sur fichier .txt
+            Scanner scanner = new Scanner(new File("graph_test.txt")); //declaration de lecture sur fichier .txt
             //on commence par recuperer le nombre de sommets et d'arcs
             nbSommet = Integer.parseInt(scanner.nextLine());
             nbArc = Integer.parseInt(scanner.nextLine());
@@ -46,7 +44,6 @@ public class Main {
         AffichageMatrice(nbArc, nbSommet, MatriceValeurs);
 
         DetectionCircuit(MatriceAdjacence, allSommet);
-//        Calendrier(MatriceValeurs,allSommet);
     }
 
 
@@ -325,131 +322,113 @@ public class Main {
         //alors, c'est un graphe d'ordonancement.
         System.out.println("\n\nle graphe est un graphe d'ordonancement");
 
+        Dates(rank, sommet, allsommet);
+
     }
-    public static void Calendrier(String[][] Matrix, ArrayList<Sommet> allsommet) {
-    	
-    	ArrayList<Integer> Calendar_nom = new ArrayList<Integer>();
-    	ArrayList<Integer> Calendar_date_tot = new ArrayList<Integer>();
-    	ArrayList<Integer> Sommet_autorise = new ArrayList<Integer>();
-    	ArrayList<Integer> val_temp = new ArrayList<Integer>();
-    	ArrayList<Integer> Sommet_temp = new ArrayList<Integer>();
-    	ArrayList<Dijkstra> point_entree = new ArrayList<Dijkstra>();
-    	ArrayList<Dijkstra> determine_sommet = new ArrayList<Dijkstra>();
-    	ArrayList<Integer> doublon_temp = new ArrayList<Integer>();
-    	
-    	int suivant_temp = 0;
-    	int val = 0;
-    	int Sommetdi = 0;
-    	
-    	int cc[][] = new int[nbSommet][nbSommet];
-    	int temp = 0;
-    	 
-		for (Sommet s : allsommet){
-			if(s.getValeur()==0) {
-				temp  = s.getNom();
-		    }
-		}
-		Calendar_nom.add(temp);
-		Calendar_date_tot.add(0);
-		
-		 
-		while(nbSommet != Calendar_nom.size()) {
-			
-			Sommet_autorise.clear();
-			val_temp.clear();
-			
-			for (Integer nom : Calendar_nom){
-				for (Sommet s : allsommet){//on détermine les successeur que l'on peut atteindre
-					if(s.getNom() == nom) {
-						Sommet_autorise.add(s.getSuivant());
-					}
-				}
-			}
-				
-			for (Integer nom_fait : Calendar_nom){//on enleve les successeur avec deja des dates au plus tot
-				for(int i=0;i<Sommet_autorise.size();i++) {
-					if(nom_fait == Sommet_autorise.get(i)) {
-						doublon_temp.add(i);
-					}
-				}
-			}
-			
-			for(int i=0;i<doublon_temp.size();i++) {
-				Sommet_autorise.remove(doublon_temp.get(i));
-			}
-			
-			for(Integer auto : Sommet_autorise ) {//on determine les predecesseur du sommet pour calculer le plus cour chemin
-				for (Sommet s : allsommet){
-					point_entree.clear();//on clear la liste avant chaque calcul de predecesseur sur le sommet concerne
-					if(auto == s.getSuivant() ) {
-						Dijkstra S = new Dijkstra(s.getNom(),s.getSuivant(),s.getValeur(),1);
-						point_entree.add(S);
-					}
-				}
-					
-				for(Dijkstra date_temp : point_entree) {
-					while(date_temp.getNom()!= temp) {
-						int predecesseur = 0;
-						for (Sommet s : allsommet){
-							if(s.getSuivant()==date_temp.getNom()) {
-								if(predecesseur>0) {
-									val = date_temp.getDate()+ s.getValeur();
-									Dijkstra S = new Dijkstra(s.getNom(),s.getSuivant(),s.getValeur(),val);
-									point_entree.add(S);
-									predecesseur = predecesseur+1;
-								}
-								else {
-									val = date_temp.getDate() + s.getValeur();
-									date_temp.setDate(val);
-									date_temp.setNom(s.getNom());
-									date_temp.setValeur(s.getValeur());
-									date_temp.setSuivant(s.getSuivant());
-								}
-							}
-						}
-					}	
-				}
-				
-//				val = point_entree.get(0).getDate();
 
-				for(Dijkstra date_temp : point_entree) {
-					if(date_temp.getDate()<val) {
-						val = date_temp.getDate();
-					}				
-				}
 
-				Dijkstra D = new Dijkstra(auto,val);
-				determine_sommet.add(D);
-			}
-			
-			if (determine_sommet.size()!=0) {
-				val =  determine_sommet.get(0).getDate();
-				Sommetdi = determine_sommet.get(0).getNom();
-			}
-			
-			for(Dijkstra di : determine_sommet) {
-				if(val>di.getDate()) {
-					val = di.getDate();
-					Sommetdi = di.getNom();
-				}
-			}
-			Calendar_nom.add(Sommetdi);
-			Calendar_date_tot.add(val);
-			
-		}
-		
-		for(Integer testnom : Calendar_nom ) {
-			System.out.println(testnom);
-		}
-		
-		
-	}
-    
-			
-	  			
-    			
-    	
-    	
-    	
-    
+	public  static void Dates(ArrayList<Integer> rank, ArrayList<Integer> sommets, ArrayList<Sommet> allSommet){
+
+        Integer[][] datesTard = new Integer[nbSommet][2];
+        Integer[][] datesTot = new Integer[nbSommet][2];
+
+        for (int i=0; i<nbSommet; i++){
+            datesTard[i][0] = i;
+            datesTot[i][0] = i;
+        }
+
+        int rankMax = Collections.max(rank);
+
+        for (int i=0; i<nbSommet; i++) {
+            for (int j = 0; j <= rankMax; j++) {
+                if (rank.get(i)==j&&j==0){
+                    for (int k=0; k<nbSommet; k++){
+                        if (datesTot[k][0]==j){
+                            datesTot[k][1]=0;
+                        }
+                    }
+                }else if(rank.get(i)==j) {
+                    for (Sommet s : allSommet) {
+                        if (s.getSuivant() == sommets.get(i)) {
+                            int temp = 0;
+                            for (int k = 0; k < nbSommet; k++) {
+                                if (datesTot[k][0] == s.getNom()) {
+                                    temp = datesTot[k][1];
+                                }
+                            }
+                            for (int k = 0; k < nbSommet; k++) {
+                                if (datesTot[k][0].equals(sommets.get(i))) {
+                                    int temp2 = temp + s.getValeur();
+                                    if (datesTot[k][1] != null) {
+                                        if (datesTot[k][1] < temp2) {
+                                            datesTot[k][1] = temp2;
+                                        }
+                                    } else {
+                                        datesTot[k][1] = temp2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i=0; i<nbSommet; i++){
+            if (rank.get(i)==rankMax){
+                datesTard[i][1]=datesTot[i][1];
+            }
+        }
+
+        for (int i=nbSommet-1; i>=0; i--) {
+            for (int j=rankMax; j>=0; j--){
+                if (rank.get(i)==j){
+                    for (Sommet s : allSommet){
+                        if (s.getSuivant()==i){
+                            int temp=0;
+                            for (int k=0; k<nbSommet; k++){
+                                if (datesTard[k][0]==i){
+                                    temp=datesTard[k][1];
+                                }
+                            }
+                            for (int k=0; k<nbSommet; k++){
+                                if (datesTard[k][0]==s.getNom()){
+                                    int temp2 = temp-s.getValeur();
+                                    if (datesTard[k][1] != null) {
+                                        if (datesTard[k][1] > temp2) {
+                                            datesTard[k][1] = temp2;
+                                        }
+                                    }else{
+                                        datesTard[k][1]=temp2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        System.out.println("\n\ncalcul des dates au plus tot, au plus tard et des marges");
+
+        System.out.print("Sommet :  \t\t");
+        for (int i=0; i<nbSommet; i++){
+            System.out.print("\t"+i);
+        }
+        System.out.print("\nDates au plus tot : ");
+        for (int i=0; i<nbSommet; i++){
+            System.out.print(datesTot[i][1]+"\t");
+        }
+        System.out.print("\nDates au plus tard :");
+        for (int i=0; i<nbSommet; i++){
+            System.out.print(datesTard[i][1]+"\t");
+        }
+        System.out.print("\nmarges :\t\t\t");
+        for (int i=0; i<nbSommet; i++){
+            int marge = datesTard[i][1] - datesTot[i][1];
+            System.out.print(marge+"\t");
+        }
+
+    }
+
 }
