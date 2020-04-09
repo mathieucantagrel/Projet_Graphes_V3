@@ -46,10 +46,11 @@ public class Main {
         AffichageMatrice(nbArc, nbSommet, MatriceValeurs);
 
         DetectionCircuit(MatriceAdjacence, allSommet);
-        Calendrier(MatriceValeurs,allSommet);
+//        Calendrier(MatriceValeurs,allSommet);
     }
 
 
+    //lecture du graphe
     public static void Lecture(ArrayList<Sommet> sommet){
         System.out.println("\n\nLecture du graphe:\n");
         for (Sommet s : sommet){
@@ -58,10 +59,12 @@ public class Main {
     }
 
 
+    //creation de la matrice d'adjacence
     public static String[][] MatriceAdjacence(int nbArc, int nbSommet, ArrayList<Sommet> sommet){
         //initialisation de la matrice
         String[][] Matrix = CreationMatrice(nbSommet);
 
+        //pour chaque case de la matrice on regarde si le cas est verifie, si oui on place un 1 dans cette case
         for (int i=0; i<nbArc; i++){
             for (int j=0; j<nbArc; j++){
                 if (sommet.get(i).getSuivant()==j){
@@ -74,10 +77,13 @@ public class Main {
     }
 
 
+    //creation de la matrice des valeurs
     public static String[][] MatriceValeurs(int nbArc, int nbSommet, ArrayList<Sommet> sommet){
 
+        //initialisation de la matrice
         String[][] Matrix = CreationMatrice(nbSommet);
 
+        //pour chaque case de la matrice on regarde si le cas est verifie, si oui on place la valeur de l'arc dans cette case
         for (int i=0; i<nbArc; i++){
             for (int j=0; j<nbArc; j++){
                 if (sommet.get(i).getSuivant()==j){
@@ -90,9 +96,12 @@ public class Main {
     }
 
 
+    //creation d'une matrice vide
     public static String[][] CreationMatrice(int nbSommet){
+        //initialisatin d'une matrice dont la taille est egale au nombre de sommet dans le graphe
         String[][] Matrix = new String [nbSommet][nbSommet];
 
+        //remplissage de la matrice avec des * pour montrer que c'est un espace vide
         for (int i=0; i<nbSommet; i++){
             for (int j=0; j<nbSommet; j++){
                 Matrix[i][j]= String.valueOf('*');
@@ -102,6 +111,7 @@ public class Main {
     }
 
 
+    //affichage d'une matrice
     public static void AffichageMatrice(int nbArc, int nbSommet, String[][] Matrix){
         for (int i=-1; i<nbSommet; i++){
             if (i==-1){
@@ -132,12 +142,15 @@ public class Main {
         ArrayList<Integer> rank = new ArrayList<Integer>();
         ArrayList<Integer> affichage = new ArrayList<Integer>();
 
+        //copie de la matrice dans un autre pour y effectuer des modifications sans rien casser
         String[][] newMatrix = new String[nbSommet][nbSommet];
         for (int i=0; i<nbSommet; i++){
             for (int j=0; j<nbSommet; j++){
                 newMatrix[i][j] = Matrix[i][j];
             }
         }
+
+        //debut utilisation de la methode suppression des points d'entree
 
         System.out.println("\n\nDetection de circuit\nmethode de suppression des points d'entres");
 
@@ -150,9 +163,10 @@ public class Main {
                 for (int j = 0; j < nbSommet; j++) {
                     if (!Matrix[j][i].equals("*")) { //on regarde si un point dans la matrice a au moins un predesseur
                         hasNoPrec = false;
+                        break;
                     }
                 }
-                if (hasNoPrec) { //si le point n'a pas de predecesseur alors on supprime le point, on met la ligne qui lui correspond a zero
+                if (hasNoPrec) { //si le point n'a pas de predecesseur alors on retient son rang et on le met dans un liste temporaire des points a supprimmer
                     if (!sommet.contains(i)){
                         sommet.add(i);
                         rank.add(k);
@@ -161,6 +175,7 @@ public class Main {
                     noPrecList.add(i);
                 }
             }
+            //quand on a fini de parcourir la matrice on retire tous les points qu on avait mis comme n'ayant pas de predecesseur
             for (Integer i : noPrecList){
                 for (int j=0; j<nbSommet; j++){
                     Matrix[i][j]="*";
@@ -168,6 +183,7 @@ public class Main {
 
             }
 
+            //affichage dans le terminal
             if (affichage.size()!=0) {
                 System.out.println("Point(s) d'entree :");
                 for (Integer i : affichage) {
@@ -179,7 +195,7 @@ public class Main {
         }
 
         boolean isCircuit = false;
-        //on regarde la matrice, si elle a un point different de zero, alors il y a un circuit
+        //on regarde la matrice, si elle a un point different de zero alors il y a un circuit
         for (int i=0; i<nbSommet; i++){
             for (int j=0; j<nbSommet; j++){
                 if (!Matrix[i][j].equals("*")){
@@ -197,6 +213,9 @@ public class Main {
         }
     }
 
+    //calcul de rang
+    //pour "calculer" le rang de chaque point on utilise les arrayLists qu on a creee dans la detectvion de circuit
+    //ici en verite on ne calcul pas de rang mais on se contente de les afficher
     public static void CalculRang(ArrayList<Integer> rank, ArrayList<Integer> sommet){
         System.out.print("\nLe graph ne contient pas de circuit\n\n");
         System.out.println("Calcul des rangs:");
@@ -224,7 +243,10 @@ public class Main {
         }
     }
 
+    //detection de graphe d'ordonancement
     public static void Ordonancement(ArrayList<Integer> rank, ArrayList<Integer> sommet, ArrayList<Sommet> allsommet, String[][] Matrix){
+
+        //detection du nombre de points d'entree
         int nbEntree=0;
         int entree = 0;
         for (int i=0; i<rank.size(); i++){
@@ -239,6 +261,7 @@ public class Main {
             }
         }
 
+        //detection du nombre de points de sorties
         boolean isSortie;
         int nbSortie = 0;
         for (int i=0; i<nbSommet; i++){
@@ -259,6 +282,8 @@ public class Main {
             }
         }
 
+
+        //verification des valeurs des arcs sortants de chaque sommets
         int arcValue = 0;
         for (int i=0; i<allsommet.size(); i++){
             arcValue = 0;
@@ -275,6 +300,7 @@ public class Main {
             }
         }
 
+        //verification des valeurs des arcs sortants du point d'entree
         for (Sommet s : allsommet){
             if (s.getNom()==entree){
                 if (s.getValeur()!=0){
@@ -285,6 +311,7 @@ public class Main {
             }
         }
 
+        //verification de la presence d'arcs a valeur negative
         for (Sommet s : allsommet){
             if (s.getValeur()<0){
                 System.out.println("\n\nle graph n'est pas un graphe d'ordonancement");
@@ -293,6 +320,9 @@ public class Main {
             }
         }
 
+        //si le graphe n'a qu'un seul point d'entree, un seul point de sortie, tous les arcs sortant d'un meme sommet ont la meme valeur,
+        //tous les arcs sortant du point d'entree ont une valeur nulle et tous les arcs ont une valeur positive,
+        //alors, c'est un graphe d'ordonancement.
         System.out.println("\n\nle graphe est un graphe d'ordonancement");
 
     }
