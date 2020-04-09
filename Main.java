@@ -218,7 +218,7 @@ public class Main {
         System.out.println("Calcul des rangs:");
         System.out.println("Methode de suppression des points d'entree");
 
-        for (int i=0; i<rank.size()-1; i++){
+        for (int i=0; i<=Collections.max(rank); i++){
             System.out.printf("\nrang courant: %s", i);
             System.out.println("\nPoints d'entree: ");
 
