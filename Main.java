@@ -11,11 +11,29 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //declaration du tableau dans lequel on va stocker nos sommets
+        nbSommet = 0;
+        nbArc=0;
+
+        String g = "";
+
+
+        try(Scanner scanner = new Scanner( System.in)){
+            while (!g.equals("fin")){
+                System.out.println("\n\n\nVeillez entrer le nom complet du fichier a lire (ecrire fin pour finir):");
+                g = scanner.nextLine();
+                if (!g.equals("fin")) {
+                    Analyse(g);
+                }
+            }
+        }
+
+    }
+
+    public  static ArrayList<Sommet> grapheTxt(String graphe){
         ArrayList<Sommet> allSommet = new ArrayList<Sommet>();
 
         try {
-            Scanner scanner = new Scanner(new File("graph_test.txt")); //declaration de lecture sur fichier .txt
+            Scanner scanner = new Scanner(new File(graphe)); //declaration de lecture sur fichier .txt
             //on commence par recuperer le nombre de sommets et d'arcs
             nbSommet = Integer.parseInt(scanner.nextLine());
             nbArc = Integer.parseInt(scanner.nextLine());
@@ -29,8 +47,16 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        //je suis special 
-        System.out.println("Projet V1");
+
+        return allSommet;
+    }
+
+    public static void Analyse(String g){
+        //declaration du tableau dans lequel on va stocker nos sommets
+        ArrayList<Sommet> allSommet = new ArrayList<Sommet>();
+
+        allSommet = grapheTxt(g);
+        //je suis special
         Lecture(allSommet);
 
         //matrice d'adjacence
@@ -45,7 +71,6 @@ public class Main {
 
         DetectionCircuit(MatriceAdjacence, allSommet);
     }
-
 
     //lecture du graphe
     public static void Lecture(ArrayList<Sommet> sommet){
