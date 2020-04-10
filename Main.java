@@ -16,10 +16,9 @@ public class Main {
 
         String g = "";
 
-
-        try(Scanner scanner = new Scanner( System.in)){
+        try(Scanner scanner = new Scanner(System.in)){
             while (!g.equals("fin")){
-                System.out.println("\n\n\nVeillez entrer le nom complet du fichier a lire (ecrire fin pour finir):");
+                System.out.println("\n\n\nVeillez entrer le nom complet du fichier a lire (ecrire fin pour finir), \nexemple graph.txt:");
                 g = scanner.nextLine();
                 if (!g.equals("fin")) {
                     Analyse(g);
@@ -29,7 +28,7 @@ public class Main {
 
     }
 
-    public  static ArrayList<Sommet> grapheTxt(String graphe){
+    private  static ArrayList<Sommet> grapheTxt(String graphe){
         ArrayList<Sommet> allSommet = new ArrayList<Sommet>();
 
         try {
@@ -51,7 +50,7 @@ public class Main {
         return allSommet;
     }
 
-    public static void Analyse(String g){
+    private static void Analyse(String g){
         //declaration du tableau dans lequel on va stocker nos sommets
         ArrayList<Sommet> allSommet = new ArrayList<Sommet>();
 
@@ -73,7 +72,7 @@ public class Main {
     }
 
     //lecture du graphe
-    public static void Lecture(ArrayList<Sommet> sommet){
+    private static void Lecture(ArrayList<Sommet> sommet){
         System.out.println("\n\nLecture du graphe:\n");
         for (Sommet s : sommet){
             System.out.printf("%s -> %s = %s \n", s.getNom(), s.getSuivant(), s.getValeur());
@@ -82,7 +81,7 @@ public class Main {
 
 
     //creation de la matrice d'adjacence
-    public static String[][] MatriceAdjacence(int nbArc, int nbSommet, ArrayList<Sommet> sommet){
+    private static String[][] MatriceAdjacence(int nbArc, int nbSommet, ArrayList<Sommet> sommet){
         //initialisation de la matrice
         String[][] Matrix = CreationMatrice(nbSommet);
 
@@ -100,7 +99,7 @@ public class Main {
 
 
     //creation de la matrice des valeurs
-    public static String[][] MatriceValeurs(int nbArc, int nbSommet, ArrayList<Sommet> sommet){
+    private static String[][] MatriceValeurs(int nbArc, int nbSommet, ArrayList<Sommet> sommet){
 
         //initialisation de la matrice
         String[][] Matrix = CreationMatrice(nbSommet);
@@ -328,7 +327,7 @@ public class Main {
                 if (s.getValeur()!=0){
                     System.out.println("\n\nle graph n'est pas un graphe d'ordonancement");
                     System.out.println("les arcs sortants du point d'entree n'ont pas tous une valeure nulle");
-                        return;
+                    return;
                 }
             }
         }
@@ -338,7 +337,7 @@ public class Main {
             if (s.getValeur()<0){
                 System.out.println("\n\nle graph n'est pas un graphe d'ordonancement");
                 System.out.println("Tous les arcs n'ont pas une valeure positive");
-                        return;
+                return;
             }
         }
 
@@ -348,11 +347,10 @@ public class Main {
         System.out.println("\n\nle graphe est un graphe d'ordonancement");
 
         Dates(rank, sommet, allsommet);
-
     }
 
 
-	public  static void Dates(ArrayList<Integer> rank, ArrayList<Integer> sommets, ArrayList<Sommet> allSommet){
+	private static void Dates(ArrayList<Integer> rank, ArrayList<Integer> sommets, ArrayList<Sommet> allSommet){
 
         Integer[][] datesTard = new Integer[nbSommet][2];
         Integer[][] datesTot = new Integer[nbSommet][2];
