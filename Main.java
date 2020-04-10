@@ -413,7 +413,11 @@ public class Main {
                             int temp=0;
                             for (int k=0; k<nbSommet; k++){
                                 if (datesTard[k][0]==i){
-                                    temp=datesTard[k][1];
+                                    if (datesTard[k][1]!=null) {
+                                        temp = datesTard[k][1];
+                                    }else{
+                                        temp=0;
+                                    }
                                 }
                             }
                             for (int k=0; k<nbSommet; k++){
@@ -436,22 +440,62 @@ public class Main {
 
         System.out.println("\n\ncalcul des dates au plus tot, au plus tard et des marges");
 
-        System.out.print("Sommet :  \t\t");
-        for (int i=0; i<nbSommet; i++){
-            System.out.print("\t"+i);
+        System.out.print("rang : \t\t\t\t");
+        for (Integer r : rank){
+            System.out.print(r+"\t");
         }
-        System.out.print("\nDates au plus tot : ");
-        for (int i=0; i<nbSommet; i++){
-            System.out.print(datesTot[i][1]+"\t");
+        System.out.println("");
+
+        System.out.print("sommet :  \t\t\t");
+        for (int i=0; i<=rankMax; i++){
+            for (int j=0; j<nbSommet; j++){
+                if (rank.get(j)==i){
+                    System.out.print(sommets.get(j)+"\t");
+                }
+            }
         }
-        System.out.print("\nDates au plus tard :");
-        for (int i=0; i<nbSommet; i++){
-            System.out.print(datesTard[i][1]+"\t");
+        System.out.println("");
+
+        System.out.print("date au plus tot :   ");
+        for (int i=0; i<=rankMax; i++){
+            for (int j=0; j<nbSommet; j++){
+                if (rank.get(j)==i){
+                    for (int k=0; k<nbSommet; k++){
+                        if (datesTot[k][0]==j){
+                            System.out.print(datesTot[k][1]+"\t");
+                        }
+                    }
+                }
+            }
         }
-        System.out.print("\nmarges :\t\t\t");
-        for (int i=0; i<nbSommet; i++){
-            int marge = datesTard[i][1] - datesTot[i][1];
-            System.out.print(marge+"\t");
+        System.out.println("");
+
+        System.out.print("date au plus tard : ");
+        for (int i=0; i<=rankMax; i++){
+            for (int j=0; j<nbSommet; j++){
+                if (rank.get(j)==i){
+                    for (int k=0; k<nbSommet; k++){
+                        if (datesTot[k][0]==j){
+                            System.out.print(datesTard[k][1]+"\t");
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("");
+
+        System.out.print("marges : \t\t\t");
+        for (int i=0; i<=rankMax; i++){
+            for (int j=0; j<nbSommet; j++){
+                if (rank.get(j)==i){
+                    for (int k=0; k<nbSommet; k++){
+                        if (datesTot[k][0]==j){
+                            int marge = datesTard[i][1] - datesTot[i][1];
+                            System.out.print(marge+"\t");
+                        }
+                    }
+                }
+            }
         }
 
     }
