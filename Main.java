@@ -157,6 +157,9 @@ public class Main {
     //lorsqu'on a fini de retirer tous les points qui n'ont pas de predecesseur, on regarde la matrice d'adjacence : s'il reste
     //des points alors il y a un circuit, sinon il n'y a pas de circuit.
     public static void DetectionCircuit(String[][] Matrix, ArrayList<Sommet> allSommet) {
+
+        System.out.println("\n\n\t\t---Detection de circuit---");
+
         boolean hasNoPrec;
         ArrayList<Integer> noPrecList = new ArrayList<Integer>();
         ArrayList<Integer> sommet = new ArrayList<Integer>();
@@ -173,7 +176,7 @@ public class Main {
 
         //debut utilisation de la methode suppression des points d'entree
 
-        System.out.println("\n\nDetection de circuit\nmethode de suppression des points d'entres");
+        System.out.println("\n\nmethode de suppression des points d'entres");
 
         for (int k=0; k<nbSommet+1; k++) { //au maximum on effectuera autant d'iteration qu'il y a de points +1
             noPrecList.clear();
@@ -239,6 +242,7 @@ public class Main {
     //ici en verite on ne calcul pas de rang mais on se contente de les afficher
     public static void CalculRang(ArrayList<Integer> rank, ArrayList<Integer> sommet){
         System.out.print("\nLe graph ne contient pas de circuit\n\n");
+        System.out.println("\n\n\t\t---Calcul des rangs---\n\n");
         System.out.println("Calcul des rangs:");
         System.out.println("Methode de suppression des points d'entree");
 
@@ -267,6 +271,8 @@ public class Main {
     //detection de graphe d'ordonancement
     public static void Ordonancement(ArrayList<Integer> rank, ArrayList<Integer> sommet, ArrayList<Sommet> allsommet, String[][] Matrix){
 
+
+        System.out.println("\n\n\t\t---le graph est-t il un graph d'ordonnancement---\n\n");
         //detection du nombre de points d'entree
         int nbEntree=0;
         int entree = 0;
@@ -281,6 +287,7 @@ public class Main {
                 entree = sommet.get(i);
             }
         }
+        System.out.println("Le graphe contient une seule entrees");
 
         //detection du nombre de points de sorties
         boolean isSortie;
@@ -302,7 +309,7 @@ public class Main {
                 }
             }
         }
-
+        System.out.println("le graphe contient une seule sortie");
 
         //verification des valeurs des arcs sortants de chaque sommets
         int arcValue = 0;
@@ -320,6 +327,7 @@ public class Main {
                 }
             }
         }
+        System.out.println("tous les arcs sortants d'un meme sommet ont la meme valeur");
 
         //verification des valeurs des arcs sortants du point d'entree
         for (Sommet s : allsommet){
@@ -331,6 +339,7 @@ public class Main {
                 }
             }
         }
+        System.out.println("les arcs sortants du point d'entree ont tous une valeure nulle");
 
         //verification de la presence d'arcs a valeur negative
         for (Sommet s : allsommet){
@@ -340,6 +349,7 @@ public class Main {
                 return;
             }
         }
+        System.out.println("Tous les arcs ont une valeure positive");
 
         //si le graphe n'a qu'un seul point d'entree, un seul point de sortie, tous les arcs sortant d'un meme sommet ont la meme valeur,
         //tous les arcs sortant du point d'entree ont une valeur nulle et tous les arcs ont une valeur positive,
@@ -381,13 +391,16 @@ public class Main {
                             }
                             for (int k = 0; k < nbSommet; k++) {
                                 if (datesTot[k][0].equals(sommets.get(i))) {
+
                                     int temp2 = temp + s.getValeur();
                                     if (datesTot[k][1] != null) {
                                         if (datesTot[k][1] < temp2) {
                                             datesTot[k][1] = temp2;
+
                                         }
                                     } else {
                                         datesTot[k][1] = temp2;
+
                                     }
                                 }
                             }
@@ -407,10 +420,10 @@ public class Main {
             for (int j=rankMax; j>=0; j--){
                 if (rank.get(i)==j){
                     for (Sommet s : allSommet){
-                        if (s.getSuivant()==i){
+                        if (s.getSuivant()==sommets.get(i)){
                             int temp=0;
                             for (int k=0; k<nbSommet; k++){
-                                if (datesTard[k][0]==i){
+                                if (datesTard[k][0].equals(sommets.get(i))){
                                     if (datesTard[k][1]!=null) {
                                         temp = datesTard[k][1];
                                     }else{
@@ -436,11 +449,11 @@ public class Main {
             }
         }
 
-        System.out.println("\n\ncalcul des dates au plus tot, au plus tard et des marges");
+        System.out.println("\n\n\t\t---calcul des dates au plus tot, au plus tard et des marges---\n\n");
 
         System.out.print("rang : \t\t\t\t");
         for (Integer r : rank){
-            System.out.print(r+"\t");
+            System.out.print("|"+r+"\t");
         }
         System.out.println("");
 
@@ -448,7 +461,7 @@ public class Main {
         for (int i=0; i<=rankMax; i++){
             for (int j=0; j<nbSommet; j++){
                 if (rank.get(j)==i){
-                    System.out.print(sommets.get(j)+"\t");
+                    System.out.print("|"+sommets.get(j)+"\t");
                 }
             }
         }
@@ -459,8 +472,8 @@ public class Main {
             for (int j=0; j<nbSommet; j++){
                 if (rank.get(j)==i){
                     for (int k=0; k<nbSommet; k++){
-                        if (datesTot[k][0]==j){
-                            System.out.print(datesTot[k][1]+"\t");
+                        if (datesTot[k][0].equals(sommets.get(j))){
+                            System.out.print("|"+datesTot[k][1]+"\t");
                         }
                     }
                 }
@@ -473,8 +486,8 @@ public class Main {
             for (int j=0; j<nbSommet; j++){
                 if (rank.get(j)==i){
                     for (int k=0; k<nbSommet; k++){
-                        if (datesTot[k][0]==j){
-                            System.out.print(datesTard[k][1]+"\t");
+                        if (datesTot[k][0].equals(sommets.get(j))){
+                            System.out.print("|"+datesTard[k][1]+"\t");
                         }
                     }
                 }
@@ -487,9 +500,9 @@ public class Main {
             for (int j=0; j<nbSommet; j++){
                 if (rank.get(j)==i){
                     for (int k=0; k<nbSommet; k++){
-                        if (datesTot[k][0]==j){
-                            int marge = datesTard[i][1] - datesTot[i][1];
-                            System.out.print(marge+"\t");
+                        if (datesTot[k][0].equals(sommets.get(j))){
+                            int marge = datesTard[k][1] - datesTot[k][1];
+                            System.out.print("|"+marge+"\t");
                         }
                     }
                 }
