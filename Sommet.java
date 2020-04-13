@@ -1,37 +1,47 @@
-public class Sommet {
-    private int nom;
-    private int suivant;
-    private int valeur;
-    
+import java.util.ArrayList;
 
-    public Sommet(int nom, int suivant, int valeur) {
+public class Sommet {
+
+    private int nom;
+    private ArrayList<Arc> arcs = null;
+    private int rang;
+    private int date_tot=-1;
+    private int date_tard=-1;
+
+    public Sommet(int nom, ArrayList<Arc> arcs) {
         this.nom = nom;
-        this.suivant = suivant;
-        this.valeur = valeur;
+        this.arcs = arcs;
     }
-//
+
     public int getNom() {
         return nom;
     }
 
-    public void setNom(int nom) {
-        this.nom = nom;
+    public ArrayList<Arc> getArcs() {
+        return arcs;
     }
 
-    public int getSuivant() {
-        return suivant;
+    public int getRang() {
+        return rang;
     }
 
-    public void setArc(int suivant) {
-        this.suivant = suivant;
+    public void setRang(int rang) {
+        this.rang = rang;
     }
 
-    public int getValeur() {
-        return valeur;
+    public int getDate_tot() {
+        return date_tot;
     }
 
-    public void setValeur(int valeur) {
-        this.valeur = valeur;
+    public void setDate_tot(int date_tot) {
+        this.date_tot = date_tot;
     }
 
+    public int getDate_tard() {
+        return date_tard;
+    }
+
+    public void setDate_tard(int date_tard) {
+        this.date_tard = date_tard;
+    }
 }
