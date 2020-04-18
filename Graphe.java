@@ -332,6 +332,15 @@ public class Graphe {
             }
         }
 
+        for (int i=0; i<=rang_max; i++){
+            for (Sommet sommet : sommets){
+                if (sommet.getRang()==i){
+                    int marge = sommet.getDate_tard()-sommet.getDate_tot();
+                    sommet.setMarge_totale(marge);
+                }
+            }
+        }
+
         for (Sommet sommet : sommets){
             for (Arc arc : sommet.getArcs()){
                 for (Sommet sommet1 : sommets){
@@ -387,8 +396,7 @@ public class Graphe {
         for (int i=0; i<=rang_max; i++){
             for (Sommet sommet : sommets){
                 if (sommet.getRang()==i){
-                    int marge = sommet.getDate_tard()-sommet.getDate_tot();
-                    System.out.print(marge+"\t");
+                    System.out.print(sommet.getMarge_totale()+"\t");
                 }
             }
         }

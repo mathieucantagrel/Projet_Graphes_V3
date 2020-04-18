@@ -7,6 +7,7 @@ public class Sommet {
     private int rang;
     private int date_tot=-1;
     private int date_tard=-1;
+    private int marge_totale=-1;
     private int marge_libre= -1;
 
     public Sommet(int nom, ArrayList<Arc> arcs) {
@@ -44,6 +45,14 @@ public class Sommet {
 
     public void setDate_tard(int date_tard) {
         this.date_tard = date_tard;
+    }
+
+    public int getMarge_totale() {
+        return marge_totale;
+    }
+
+    public void setMarge_totale(int marge_totale) {
+        this.marge_totale = marge_totale;
     }
 
     public int getMarge_libre() {
