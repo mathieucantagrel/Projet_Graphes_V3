@@ -332,6 +332,21 @@ public class Graphe {
             }
         }
 
+        for (Sommet sommet : sommets){
+            for (Arc arc : sommet.getArcs()){
+                for (Sommet sommet1 : sommets){
+                    if (arc.getSuivant()==sommet1.getNom()){
+                        int margeLibre = sommet1.getDate_tot()-sommet.getDate_tot()-arc.getPoid();
+                        if (sommet.getMarge_libre()==-1){
+                            sommet.setMarge_libre(margeLibre);
+                        }else if(sommet.getMarge_libre()>margeLibre){
+                            sommet.setMarge_libre(margeLibre);
+                        }
+                    }
+                }
+            }
+        }
+
         System.out.print("\nrang\t\t\t\t");
         for (int i=0; i<=rang_max; i++){
             for (Sommet sommet : sommets){
@@ -368,12 +383,24 @@ public class Graphe {
             }
         }
 
-        System.out.print("\nmarge\t\t\t\t");
+        System.out.print("\nmarge totale\t\t");
         for (int i=0; i<=rang_max; i++){
             for (Sommet sommet : sommets){
                 if (sommet.getRang()==i){
                     int marge = sommet.getDate_tard()-sommet.getDate_tot();
                     System.out.print(marge+"\t");
+                }
+            }
+        }
+
+        System.out.print("\nmarge libre\t\t\t");
+        for (int i=0; i<=rang_max; i++){
+            for (Sommet sommet : sommets){
+                if (sommet.getRang()==i){
+                    if (sommet.getMarge_libre()==-1){
+                        continue;
+                    }
+                    System.out.print(sommet.getMarge_libre()+"\t");
                 }
             }
         }

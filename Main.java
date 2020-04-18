@@ -32,7 +32,7 @@ public class Main {
 
 
             for (int i=0; i<nbsommets; i++){
-                ArrayList<Arc> arcs = new ArrayList<Arc>();
+                ArrayList<Arc> arcs = new ArrayList<>();
                 Scanner scanner1 = new Scanner(new File(g));
                 scanner1.nextLine();
                 scanner1.nextLine();
