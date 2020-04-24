@@ -1,7 +1,7 @@
 public class Arc {
 
-    private int suivant;
-    private int poid;
+    private final int suivant;
+    private final int poid;
 
     public Arc(int suivant, int poid) {
         this.suivant = suivant;

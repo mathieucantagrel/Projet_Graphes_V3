@@ -2,7 +2,8 @@ import java.util.ArrayList;
 
 public class Sommet {
 
-    private int nom;
+    //un arc a un nom, une liste d'arcs, un rang, un ensemble de dates et de marges
+    private final int nom;
     private ArrayList<Arc> arcs = null;
     private int rang;
     private int date_tot=-1;
