@@ -131,7 +131,6 @@ public class Graphe {
                     for (Arc arc : sommet2.getArcs()){
                         if (arc.getSuivant()==sommet1.getNom()){
                             hasNoPrec.remove(sommet1);
-                            changement = true;
                         }
                     }
                 }
@@ -147,6 +146,7 @@ public class Graphe {
             System.out.println("\nSuppression des points d'entrees.");
             for (Sommet sommet : hasNoPrec){
                 graphe2.sommets.remove(sommet);
+                changement = true;
 
                 //set du rang du sommet qui est supprime
                 for (Sommet sommet1 : this.sommets){
