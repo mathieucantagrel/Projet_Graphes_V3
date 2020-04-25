@@ -29,7 +29,7 @@ public class Main {
             //lecture et stockage des sommets du graphe dans arraylist
             Scanner scanner = new Scanner(new File(g));
 
-            ArrayList<Sommet> allsommet = new ArrayList<Sommet>();
+            ArrayList<L3_B12_Sommet> allsommet = new ArrayList<L3_B12_Sommet>();
 
             int nbsommets = Integer.parseInt(scanner.nextLine()); //la premiere ligne du fichier est  le nombre de sommet
             int nbarcs = Integer.parseInt(scanner.nextLine()); //la deuxieme ligne du fichier est le nombre d'arretes
@@ -38,7 +38,7 @@ public class Main {
             //pour chaque sommet on recupere tous ses arcs et on les stock dans une arraylist
             for (int i=0; i<nbsommets; i++){
 
-                ArrayList<Arc> arcs = new ArrayList<>(); //creation de l'arraylist qui stocker les arcs du sommet en cours
+                ArrayList<L3_B12_Arc> arcs = new ArrayList<>(); //creation de l'arraylist qui stocker les arcs du sommet en cours
                 Scanner scanner1 = new Scanner(new File(g)); //creation du scanner pour parcourir le ficher pour le sommet en cours
 
                 //les 2 premieres ligne ont deja ete recupere
@@ -53,18 +53,18 @@ public class Main {
                     if (Integer.parseInt(lineSplit[0])==i) {
 
                         //le [1] du est le nom du sommet suivant, le [2] su split est le poid de l'arc
-                        Arc a = new Arc(Integer.parseInt(lineSplit[1]), Integer.parseInt(lineSplit[2]));
+                        L3_B12_Arc a = new L3_B12_Arc(Integer.parseInt(lineSplit[1]), Integer.parseInt(lineSplit[2]));
 
                         arcs.add(a);
                     }
                 }
 
-                Sommet s = new Sommet(i, arcs); //creation d'un objet sommeta avec un nom et une liste d'arcs
+                L3_B12_Sommet s = new L3_B12_Sommet(i, arcs); //creation d'un objet sommeta avec un nom et une liste d'arcs
                 allsommet.add(s);
             }
 
             //creation d'un objet graphe qui a un nombre de sommets et d'arcs et une liste de sommets
-            Graphe graphe = new Graphe(nbsommets, nbarcs, allsommet);
+            L3_B12_Graphe graphe = new L3_B12_Graphe(nbsommets, nbarcs, allsommet);
 
             graphe.Lecture(); //lecture du graphe depuis l'objet
             graphe.Adjacence(); //affichage de la matrice d'ajacence

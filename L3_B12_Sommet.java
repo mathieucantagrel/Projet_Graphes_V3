@@ -1,17 +1,17 @@
 import java.util.ArrayList;
 
-public class Sommet {
+public class L3_B12_Sommet {
 
     //un arc a un nom, une liste d'arcs, un rang, un ensemble de dates et de marges
     private final int nom;
-    private ArrayList<Arc> arcs = null;
+    private ArrayList<L3_B12_Arc> arcs = null;
     private int rang;
     private int date_tot=-1;
     private int date_tard=-1;
     private int marge_totale=-1;
     private int marge_libre= -1;
 
-    public Sommet(int nom, ArrayList<Arc> arcs) {
+    public L3_B12_Sommet(int nom, ArrayList<L3_B12_Arc> arcs) {
         this.nom = nom;
         this.arcs = arcs;
     }
@@ -20,7 +20,7 @@ public class Sommet {
         return nom;
     }
 
-    public ArrayList<Arc> getArcs() {
+    public ArrayList<L3_B12_Arc> getArcs() {
         return arcs;
     }
 

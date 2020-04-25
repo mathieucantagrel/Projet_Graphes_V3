@@ -1,0 +1,212 @@
+
+--L3-B12-graphe9.txt--
+
+
+		---Lecture du graphe:---
+
+0 -> 1 = 0
+0 -> 2 = 0
+1 -> 5 = 2
+1 -> 4 = 2
+1 -> 2 = 2
+2 -> 3 = 3
+2 -> 8 = 3
+2 -> 4 = 3
+3 -> 7 = 5
+3 -> 9 = 5
+4 -> 8 = 6
+4 -> 6 = 6
+4 -> 5 = 6
+5 -> 6 = 2
+5 -> 7 = 2
+6 -> 9 = 1
+7 -> 8 = 6
+8 -> 9 = 1
+
+
+		---Matrice d'adjacence:---
+
+		 0	 1	 2	 3	 4	 5	 6	 7	 8	 9
+	 0	 *	 1	 1	 *	 *	 *	 *	 *	 *	 *
+	 1	 *	 *	 1	 *	 1	 1	 *	 *	 *	 *
+	 2	 *	 *	 *	 1	 1	 *	 *	 *	 1	 *
+	 3	 *	 *	 *	 *	 *	 *	 *	 1	 *	 1
+	 4	 *	 *	 *	 *	 *	 1	 1	 *	 1	 *
+	 5	 *	 *	 *	 *	 *	 *	 1	 1	 *	 *
+	 6	 *	 *	 *	 *	 *	 *	 *	 *	 *	 1
+	 7	 *	 *	 *	 *	 *	 *	 *	 *	 1	 *
+	 8	 *	 *	 *	 *	 *	 *	 *	 *	 *	 1
+	 9	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *
+
+
+		---Matrice des valeurs:---
+
+		 0	 1	 2	 3	 4	 5	 6	 7	 8	 9
+	 0	 *	 0	 0	 *	 *	 *	 *	 *	 *	 *
+	 1	 *	 *	 2	 *	 2	 2	 *	 *	 *	 *
+	 2	 *	 *	 *	 3	 3	 *	 *	 *	 3	 *
+	 3	 *	 *	 *	 *	 *	 *	 *	 5	 *	 5
+	 4	 *	 *	 *	 *	 *	 6	 6	 *	 6	 *
+	 5	 *	 *	 *	 *	 *	 *	 2	 2	 *	 *
+	 6	 *	 *	 *	 *	 *	 *	 *	 *	 *	 1
+	 7	 *	 *	 *	 *	 *	 *	 *	 *	 6	 *
+	 8	 *	 *	 *	 *	 *	 *	 *	 *	 *	 1
+	 9	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *
+
+
+		---Detection de circuit:---
+
+
+
+Points d'entrees :
+0
+Suppression des points d'entrees.
+
+Sommets restants :
+1  2  3  4  5  6  7  8  9
+
+Points d'entrees :
+1
+Suppression des points d'entrees.
+
+Sommets restants :
+2  3  4  5  6  7  8  9
+
+Points d'entrees :
+2
+Suppression des points d'entrees.
+
+Sommets restants :
+3  4  5  6  7  8  9
+
+Points d'entrees :
+3  4
+Suppression des points d'entrees.
+
+Sommets restants :
+5  6  7  8  9
+
+Points d'entrees :
+5
+Suppression des points d'entrees.
+
+Sommets restants :
+6  7  8  9
+
+Points d'entrees :
+6  7
+Suppression des points d'entrees.
+
+Sommets restants :
+8  9
+
+Points d'entrees :
+8
+Suppression des points d'entrees.
+
+Sommets restants :
+9
+
+Points d'entrees :
+9
+Suppression des points d'entrees.
+
+Sommets restants :
+
+
+Points d'entrees :
+
+Suppression des points d'entrees.
+
+Sommets restants :
+
+
+---le graphe ne contient pas de circuit---
+
+
+		---Calcul des rangs:---
+
+
+
+Rang courant: 0
+Points d'entree
+0
+Suppression des points d'entrees
+Sommets restants:
+1  2  3  4  5  6  7  8  9
+
+Rang courant: 1
+Points d'entree
+1
+Suppression des points d'entrees
+Sommets restants:
+2  3  4  5  6  7  8  9
+
+Rang courant: 2
+Points d'entree
+2
+Suppression des points d'entrees
+Sommets restants:
+3  4  5  6  7  8  9
+
+Rang courant: 3
+Points d'entree
+3  4
+Suppression des points d'entrees
+Sommets restants:
+5  6  7  8  9
+
+Rang courant: 4
+Points d'entree
+5
+Suppression des points d'entrees
+Sommets restants:
+6  7  8  9
+
+Rang courant: 5
+Points d'entree
+6  7
+Suppression des points d'entrees
+Sommets restants:
+8  9
+
+Rang courant: 6
+Points d'entree
+8
+Suppression des points d'entrees
+Sommets restants:
+9
+
+Rang courant: 7
+Points d'entree
+9
+Suppression des points d'entrees
+Sommets restants:
+
+
+---Rangs calculees---
+0  1  2  3  4  5  6  7  8  9
+0  1  2  3  3  4  5  5  6  7
+
+		---Le graphe est-il un graphe d'ordonancement:---
+
+Le graphe contient une seule entrees
+le graphe contient une seule sortie
+tous les arcs sortants d'un meme sommet ont la meme valeur
+les arcs sortants du point d'entree ont tous une valeure nulle
+Tous les arcs ont une valeure positive
+
+
+le graphe est un graphe d'ordonancement
+
+
+		---Le graphe est-il un graphe d'ordonancement:---
+
+
+rang				0	1	2	3	3	4	5	5	6	7
+sommet				0	1	2	3	4	5	6	7	8	9
+date au plus tot	0	0	2	5	5	11	13	13	19	20
+date au plus tard	0	0	2	8	5	11	19	13	19	20
+marge totale		0	0	0	3	0	0	6	0	0	0
+marge libre			0	0	0	3	0	0	6	0	0
+

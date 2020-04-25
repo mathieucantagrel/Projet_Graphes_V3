@@ -1,0 +1,112 @@
+
+--L3-B12-graphe2.txt--
+
+
+		---Lecture du graphe:---
+
+0 -> 1 = 0
+0 -> 2 = 0
+1 -> 2 = 2
+1 -> 5 = 2
+1 -> 4 = 2
+2 -> 3 = 3
+2 -> 8 = 3
+2 -> 4 = 3
+3 -> 7 = 5
+3 -> 9 = 5
+4 -> 5 = 6
+4 -> 6 = 6
+4 -> 8 = 6
+5 -> 6 = 5
+5 -> 7 = 2
+6 -> 4 = 6
+7 -> 8 = 6
+8 -> 9 = 1
+10 -> 2 = 4
+10 -> 7 = 4
+11 -> 12 = 1
+11 -> 13 = 1
+13 -> 12 = 2
+
+
+		---Matrice d'adjacence:---
+
+		 0	 1	 2	 3	 4	 5	 6	 7	 8	 9	 10	 11	 12	 13
+	 0	 *	 1	 1	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *
+	 1	 *	 *	 1	 *	 1	 1	 *	 *	 *	 *	 *	 *	 *	 *
+	 2	 *	 *	 *	 1	 1	 *	 *	 *	 1	 *	 *	 *	 *	 *
+	 3	 *	 *	 *	 *	 *	 *	 *	 1	 *	 1	 *	 *	 *	 *
+	 4	 *	 *	 *	 *	 *	 1	 1	 *	 1	 *	 *	 *	 *	 *
+	 5	 *	 *	 *	 *	 *	 *	 1	 1	 *	 *	 *	 *	 *	 *
+	 6	 *	 *	 *	 *	 1	 *	 *	 *	 *	 *	 *	 *	 *	 *
+	 7	 *	 *	 *	 *	 *	 *	 *	 *	 1	 *	 *	 *	 *	 *
+	 8	 *	 *	 *	 *	 *	 *	 *	 *	 *	 1	 *	 *	 *	 *
+	 9	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *
+	 10	 *	 *	 1	 *	 *	 *	 *	 1	 *	 *	 *	 *	 *	 *
+	 11	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 1	 1
+	 12	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *
+	 13	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 1	 *
+
+
+		---Matrice des valeurs:---
+
+		 0	 1	 2	 3	 4	 5	 6	 7	 8	 9	 10	 11	 12	 13
+	 0	 *	 0	 0	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *
+	 1	 *	 *	 2	 *	 2	 2	 *	 *	 *	 *	 *	 *	 *	 *
+	 2	 *	 *	 *	 3	 3	 *	 *	 *	 3	 *	 *	 *	 *	 *
+	 3	 *	 *	 *	 *	 *	 *	 *	 5	 *	 5	 *	 *	 *	 *
+	 4	 *	 *	 *	 *	 *	 6	 6	 *	 6	 *	 *	 *	 *	 *
+	 5	 *	 *	 *	 *	 *	 *	 5	 2	 *	 *	 *	 *	 *	 *
+	 6	 *	 *	 *	 *	 6	 *	 *	 *	 *	 *	 *	 *	 *	 *
+	 7	 *	 *	 *	 *	 *	 *	 *	 *	 6	 *	 *	 *	 *	 *
+	 8	 *	 *	 *	 *	 *	 *	 *	 *	 *	 1	 *	 *	 *	 *
+	 9	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *
+	 10	 *	 *	 4	 *	 *	 *	 *	 4	 *	 *	 *	 *	 *	 *
+	 11	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 1	 1
+	 12	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *
+	 13	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 2	 *
+
+
+		---Detection de circuit:---
+
+
+
+Points d'entrees :
+0  10  11
+Suppression des points d'entrees.
+
+Sommets restants :
+1  2  3  4  5  6  7  8  9  12  13
+
+Points d'entrees :
+1  13
+Suppression des points d'entrees.
+
+Sommets restants :
+2  3  4  5  6  7  8  9  12
+
+Points d'entrees :
+2  12
+Suppression des points d'entrees.
+
+Sommets restants :
+3  4  5  6  7  8  9
+
+Points d'entrees :
+3
+Suppression des points d'entrees.
+
+Sommets restants :
+4  5  6  7  8  9
+
+Points d'entrees :
+
+Suppression des points d'entrees.
+
+Sommets restants :
+4  5  6  7  8  9
+
+---le graphe contient un circuit---
+
+
+
