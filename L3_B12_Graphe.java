@@ -77,6 +77,26 @@ public class L3_B12_Graphe {
             System.out.println("  ");
         }
     }
+    private void affichageMatrice_int(int[][] Matrix){
+        //"header" qui affiche les numeros des sommets
+        for (int i=-1; i<nbsommets; i++){
+            if (i==-1){
+                System.out.print("\t");
+            }else{
+                System.out.print("\t"+i);
+            }
+        }
+
+        System.out.println("");
+
+        for (int i=0; i<nbsommets; i++){
+            System.out.print("\t"+ i);
+            for (int j=0; j<nbsommets; j++){
+                System.out.print("\t"+Matrix[i][j]);
+            }
+            System.out.println("  ");
+        }
+    }
 
     //creation de la matrice d'adjacence
     public void Adjacence(){
@@ -109,6 +129,7 @@ public class L3_B12_Graphe {
             }
         }
         affichageMatrice(Matrix);
+        floyd(Matrix);
     }
 
     //detection de circuit dans le graphe et calcul des rangs
@@ -440,6 +461,47 @@ public class L3_B12_Graphe {
                     System.out.print(sommet.getMarge_libre()+"\t");
                 }
             }
+        }
+    }
+    public void floyd(String[][] Matrix){
+        int[][] matriceL = new int[nbsommets][nbsommets];
+        int[][] matriceP = new int[nbsommets][nbsommets];
+
+        for (int i = 0; i < nbsommets ; i++) {
+            for (int j = 0; j < nbsommets; j++) {
+                if(i == j){
+                    matriceL[i][j] = 0;
+                }else{
+                    if(Matrix[i][j].equals("*")){
+                        matriceL[i][j] = 10000;
+                    }else{
+                        matriceL[i][j] = Integer.parseInt(Matrix[i][j]);
+                    }
+                }
+                matriceP[i][j] = i+1;
+
+            }
+        }
+        System.out.println("Init");
+        affichageMatrice_int(matriceL);
+        System.out.println();
+        affichageMatrice_int(matriceP);
+
+        for (int k = 0; k < nbsommets ; k++) {
+            for (int j = 0; j < nbsommets ; j++) {
+                for (int i = 0; i < nbsommets; i++) {
+                    if (!((matriceL[i][k] == 10000) || ((matriceL[k][j] == 10000) ))){
+                        if(matriceL[i][k] + matriceL[k][j] < matriceL[i][j]) {
+                            matriceL[i][j] = matriceL[i][k] + matriceL[k][j];
+                            matriceP[i][j] = matriceP[k][j];
+                        }
+                    }
+                }
+            }
+            System.out.println("\nEtape " + (k + 1));
+            affichageMatrice_int(matriceL);
+            System.out.println();
+            affichageMatrice_int(matriceP);
         }
     }
 }
