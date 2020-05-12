@@ -289,7 +289,7 @@ public class L3_B12_Graphe {
     //calcul des dates et des marges
     public void Dates(){
 
-        System.out.println("\n\n\t\t---Le graphe est-il un graphe d'ordonancement:---\n");
+        System.out.println("\n\n\t\t---calcul des dates:---\n");
 
         //intialisaton de la date du point d'entree a 0
         for (L3_B12_Sommet sommet : sommets){
@@ -321,7 +321,7 @@ public class L3_B12_Graphe {
             }
         }
 
-        //initialisatio de la date au plus tard du point de sortie a sa date au plus tot
+        //initialisation de la date au plus tard du point de sortie a sa date au plus tot
         for (L3_B12_Sommet sommet : sommets){
             if (sommet.getRang()==rang_max){
                 sommet.setDate_tard(sommet.getDate_tot());
@@ -365,7 +365,7 @@ public class L3_B12_Graphe {
                 for (L3_B12_Sommet sommet1 : sommets){
                     if (arc.getSuivant()==sommet1.getNom()){
 
-                        //calcul : date tot du sommet suivant - date tot du sommet sourant - poid de l'arc
+                        //calcul : date tot du sommet suivant - date tot du sommet courant - poid de l'arc
                         int margeLibre = sommet1.getDate_tot()-sommet.getDate_tot()-arc.getPoid();
 
                         if (sommet.getMarge_libre()==-1){ // si le sommet courant n a pas de date on lui applique
